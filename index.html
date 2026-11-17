@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angel Bite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<section class="hero">
+  <div class="copy">
+    <div class="view" id="viewLogin">
+      <h1>Part 2: Angel Bite</h1>
+      <p class="tag">Login now to stream while you play</p>
+      <div class="ctas">
+        <a class="btn" href="#">Spotify</a>
+        <a class="btn" href="#">Apple Music</a>
+      </div>
+      <a class="skip" href="#select" id="skip">skip</a>
+    </div>
+    <div class="view gone" id="viewSelect">
+      <h2 class="selTitle">Select a character</h2>
+      <div class="cards" id="cards" role="listbox" aria-label="Select a character">
+        <button class="card" data-name="soobin" role="option"><img class="art" src="assets/cards/soobin.png" alt="Soobin"><span class="pick"><img src="assets/select-arrow.png" alt="" width="136" height="78">Select</span></button>
+        <button class="card sel" data-name="yeonjun" role="option" aria-selected="true"><img class="art" src="assets/cards/yeonjun.png" alt="Yeonjun"><span class="pick"><img src="assets/select-arrow.png" alt="" width="136" height="78">Select</span></button>
+        <button class="card" data-name="beomgyu" role="option"><img class="art" src="assets/cards/beomgyu.png" alt="Beomgyu"><span class="pick"><img src="assets/select-arrow.png" alt="" width="136" height="78">Select</span></button>
+        <button class="card" data-name="taehyun" role="option"><img class="art" src="assets/cards/taehyun.png" alt="Taehyun"><span class="pick"><img src="assets/select-arrow.png" alt="" width="136" height="78">Select</span></button>
+        <button class="card" data-name="hueningkai" role="option"><img class="art" src="assets/cards/hueningkai.png" alt="Huening Kai"><span class="pick"><img src="assets/select-arrow.png" alt="" width="136" height="78">Select</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="topShade" aria-hidden="true"></div>
+  <a class="logo" href="#" aria-label="Perfect Storm"><img src="assets/logo-perfect-storm.png" alt="Perfect Storm"></a>
+  <a class="back gone" href="#" id="back">back</a>
+  <a class="btn next gone" href="#" id="next">Next</a>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="scene" aria-hidden="true"><canvas id="scene"></canvas></div>
+</section>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+  :root{
+    --sky:#edd5c2; --sign:#81504e; --sign-dark:#3d2325; --cream:#f0d2c5;
+    --teal:#2f4d56; --navy:#1b222d; --rose:#d9a8a0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--sky);color:var(--sign-dark)}
+  body{font-family:'Pixelify Sans',ui-monospace,monospace;-webkit-font-smoothing:none}
+  .hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:flex;flex-direction:column}
+  nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(18px,4vw,48px)}
+  .logo{font-family:'Pixelify Sans',monospace;font-size:15px;letter-spacing:1px;color:var(--sign);text-decoration:none;display:flex;align-items:center;gap:10px}
+  .logo i{display:inline-block;width:14px;height:14px;background:var(--sign);box-shadow:3px 3px 0 var(--sign-dark)}
+  nav ul{display:flex;gap:clamp(14px,3vw,34px);list-style:none}
+  nav a.lnk{font-family:'Pixelify Sans',monospace;font-size:13px;color:var(--sign-dark);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+  nav a.lnk:hover{border-color:var(--sign)}
+  .copy{position:relative;z-index:2;text-align:center;padding:0 20px calc(var(--scene-h, 50vh) * .97);flex:1;display:flex;flex-direction:column;justify-content:center}
+  .view{position:absolute;left:0;right:0;top:0;bottom:calc(var(--scene-h, 50vh) * .84);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 20px;
+        transition:opacity .35s ease,transform .35s ease}
+  .view.out{opacity:0;transform:translateX(-40px);pointer-events:none}
+  .view.pre{opacity:0;transform:translateX(40px);pointer-events:none}
+  .view.gone{display:none}
+  /* character selection: cards sit on the wall, 112px (≈11vh) below its top edge, native pixel size at 1440 wide */
+  #viewSelect{top:calc(100vh / 3 + 4vh);top:calc(100svh / 3 + 4svh);bottom:auto;justify-content:flex-start}
+  .selTitle{margin:0 0 calc(7vh - 22px);margin-bottom:calc(7svh - 22px);font-size:22px;font-weight:400;line-height:1;color:#fff}
+  .cards{display:flex;flex-wrap:nowrap;justify-content:center;gap:clamp(16px,3.75vw,54px)}   /* wide: always one row of five */
+  .card{position:relative;padding:0;border:0;background:none;cursor:pointer;line-height:0;font:inherit;-webkit-tap-highlight-color:transparent}
+  .card .art{height:clamp(140px,20.2vw,291px);width:auto;display:block}
+  .card:focus-visible{outline:3px solid #fff;outline-offset:4px}
+  .pick{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:16px;flex-direction:column;align-items:center;gap:7px;
+        font-family:'Pixelify Sans',monospace;font-size:17px;font-weight:400;line-height:1;color:#fff;white-space:nowrap;pointer-events:none}
+  .pick img{width:28px;height:auto;display:block}
+  .card.sel .pick{display:flex}
+  /* posters get slapped onto the wall one at a time when the selection page appears */
+  #viewSelect.land .selTitle{animation:fadeIn .4s ease-out both}
+  #viewSelect.land .card{animation:slap .5s cubic-bezier(.2,.9,.3,1.15) both;transform-origin:50% 55%;will-change:transform,opacity}
+  #viewSelect.land .card:nth-child(1){animation-delay:.25s} #viewSelect.land .card:nth-child(2){animation-delay:.42s}
+  #viewSelect.land .card:nth-child(3){animation-delay:.59s} #viewSelect.land .card:nth-child(4){animation-delay:.76s}
+  #viewSelect.land .card:nth-child(5){animation-delay:.93s}
+  #viewSelect.land:not(.landed) .card.sel .pick{animation:pop .3s ease-out both;animation-delay:1.5s}
+  #viewSelect.landed .card.sel .pick{animation:pop .14s ease-out both}
+  #viewSelect:not(.land) .card,#viewSelect:not(.land) .selTitle{opacity:0}
+  @keyframes slap{
+    0%  {opacity:0;transform:scale(1.55) rotate(-7deg) translateY(-6%);filter:drop-shadow(0 26px 18px rgba(0,0,0,.4))}
+    35% {opacity:1}
+    70% {transform:scale(.95) rotate(1.5deg) translateY(0);filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+    86% {transform:scale(1.03) rotate(-.5deg)}
+    100%{transform:scale(1) rotate(0);filter:drop-shadow(0 1px 0 rgba(0,0,0,.2))}
+  }
+  @keyframes pop{0%{opacity:0;transform:translate(-50%,8px) scale(.6)}70%{transform:translate(-50%,-2px) scale(1.08)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    #viewSelect.land .card,#viewSelect.land .selTitle,#viewSelect.land .card.sel .pick,.next{animation:none}
+    #viewSelect:not(.land) .card,#viewSelect:not(.land) .selTitle{opacity:1}
+  }
+  @media (max-width:1100px){
+    /* tablets and phones: locked 3 + 2 grid (second row centred), kept inside the wall band
+       (wall top = 1/3 of the screen; floor = bottom 11% of the screen height) */
+    #viewSelect{top:calc(100vh / 3 + 12px);top:calc(100svh / 3 + 12px)}
+    .selTitle{margin-bottom:12px}
+    .cards{display:grid;grid-template-columns:repeat(6,auto);justify-content:center;justify-items:center;column-gap:clamp(8px,1.5vw,16px);row-gap:74px}
+    .card:nth-child(1){grid-column:1/3} .card:nth-child(2){grid-column:3/5} .card:nth-child(3){grid-column:5/7}
+    .card:nth-child(4){grid-column:2/4} .card:nth-child(5){grid-column:4/6}
+    .card .art{height:min(291px, calc((100vw - 90px) / 3 * 291 / 217), calc((55.6vh - 192px) / 2));height:min(291px, calc((100vw - 90px) / 3 * 291 / 217), calc((55.6svh - 192px) / 2))}
+  }
+  @media (max-width:700px){
+    /* phones: wall top is 15% down the screen (see layout()), wall band ≈ 71% of the height.
+       Posters in three columns — soobin / taehyun left, beomgyu / hueningkai right, yeonjun dropped into the middle. */
+    #viewSelect{top:calc(15vh + 43px);top:calc(15svh + 43px);padding:0 11px}
+    .selTitle{font-size:21px;margin-bottom:min(38px,4vh)}
+    .cards{--ch:min(calc((100vw - 46px) / 3 * 291 / 217), calc((71vh - 204px) / 2));--ch:min(calc((100vw - 46px) / 3 * 291 / 217), calc((71svh - 204px) / 2));
+           display:grid;grid-template-columns:repeat(3,auto);grid-template-rows:auto auto;column-gap:12px;row-gap:58px;justify-content:center;align-items:start}
+    .card .art{height:var(--ch)}
+    .card:nth-child(1){grid-column:1;grid-row:1} .card:nth-child(3){grid-column:3;grid-row:1}
+    .card:nth-child(4){grid-column:1;grid-row:2} .card:nth-child(5){grid-column:3;grid-row:2}
+    .card:nth-child(2){grid-column:2;grid-row:1 / 3;margin-top:calc(var(--ch) * 0.27)}
+    .pick{margin-top:9px;font-size:15px;gap:5px}
+    .pick img{width:22px}
+  }
+  .next{position:absolute;z-index:3;left:50%;bottom:calc(5.5vh - 21px);bottom:calc(5.5svh - 21px);transform:translateX(-50%)}   /* centred on the pavement */
+  .next.gone{display:none}
+  #viewSelect.land ~ .next,.next.land{animation:fadeIn .35s ease-out both;animation-delay:1.7s}
+  .next.landed{animation:none}
+  @media (max-width:700px){ .next{bottom:calc(7vh - 21px);bottom:calc(7svh - 21px)} }
+  /* dark band across the top (header area for a logo / nav): sky #EDD5C2 reads as #8B7F77 under it, as in the reference */
+  .topShade{position:absolute;left:0;right:0;top:0;height:130px;z-index:20;pointer-events:none;   /* above everything (text, links, posters); clicks pass through */
+            background:linear-gradient(to bottom, rgba(10,6,20,.42) 0, rgba(10,6,20,.42) 56px, rgba(10,6,20,0) 130px)}
+  .logo{position:absolute;left:20px;top:16px;z-index:21;line-height:0}   /* above the header shade, so it stays bright */
+  .logo img{width:clamp(170px,20.5vw,296px);height:auto;display:block}
+  @media (max-width:700px){ .logo{left:12px;top:12px} }
+  .back{position:absolute;right:22px;top:18px;z-index:21;font-size:17px;font-weight:500;color:#fff;text-decoration:none;transition:opacity .35s}
+  .back.gone{display:none}
+  .back.out{opacity:0;pointer-events:none}
+  .eyebrow{font-size:clamp(14px,1.6vw,18px);color:var(--sign);letter-spacing:6px;margin-bottom:10px}
+  h1{font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.1;color:var(--sign-dark)}
+  .tag{margin:12px auto 0;font-size:16px;font-weight:500;line-height:1.2;color:var(--sign-dark)}
+  .ctas{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:42px;min-width:145px;padding:0 22px;
+       font-size:18px;font-weight:500;line-height:1;text-decoration:none;background:#fff;color:var(--sign-dark);border:1px solid var(--sign-dark);transition:background .1s}
+  .btn:hover{background:#f4f4f4}
+  .skip{display:inline-block;margin:10px auto 0;font-size:17px;font-weight:500;color:var(--sign-dark);text-decoration:none}
+  .scene{position:absolute;left:0;bottom:0;width:100%;z-index:1;line-height:0}
+  canvas{display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+  #sky{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0}
+  .btn:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  @media (max-width:560px){ nav ul{display:none} }
