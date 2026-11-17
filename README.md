@@ -4,5 +4,5 @@
 - `index.html#select` — the character selection screen
 
 ## To do
-- Replace the current designs with the whole thing
+- Replace the homepage and character selection page designs with the new designs
 - Add the icons/menu
